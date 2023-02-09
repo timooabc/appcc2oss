@@ -1,0 +1,153 @@
+{
+  "name": "appcc2oss",
+  "displayName": "AppCC2OSS",
+  "description": "AppCC2OSS Manager",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:OSSManager_List",
+    "onCommand:appcc2oss.addTask"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsWelcome": [
+      {
+        "view": "OSSManager_List",
+        "contents": "Please set accessKeyID、accessKeySecret in Settings at first\n[Open Setting](command:appcc2oss.setting)",
+        "when": "!config.acoss.aliyun.accessKeyId || !config.acoss.aliyun.accessKeySecret"
+      },
+      {
+        "view": "OSSManager_List",
+        "contents": "Tips:Right Click A Folder From FileExplorer To Add A Upload Task.",
+        "when": "!acoss.list"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "appcc2oss.upload",
+          "when": "view == OSSManager_List && viewItem == task",
+          "group": "acoss@1"
+        },
+        {
+          "command": "appcc2oss.copyLink",
+          "when": "view == OSSManager_List && viewItem == task",
+          "group": "acoss@2"
+        },
+        {
+          "command": "appcc2oss.deleteTask",
+          "when": "view == OSSManager_List && viewItem == task",
+          "group": "acoss-delete@3"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "appcc2oss.setting",
+          "when": "view == OSSManager_List",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "appcc2oss.addTask",
+          "when": "explorerResourceIsFolder"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "OSSManager_List",
+          "name": "OSS Upload Task"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "appcc2oss.upload",
+        "title": "Upload",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "appcc2oss.copyLink",
+        "title": "Copy Link",
+        "icon": "$(link)"
+      },
+      {
+        "command": "appcc2oss.deleteTask",
+        "title": "Delete"
+      },
+      {
+        "command": "appcc2oss.addTask",
+        "title": "Oss: Add Upload Task"
+      },
+      {
+        "command": "appcc2oss.setting",
+        "title": "Setting",
+        "icon": "$(settings)"
+      }
+    ],
+    "configuration": {
+      "title": "AppCC2OSS",
+      "properties": {
+        "acoss.aliyun.accessKeyId": {
+          "type": "string",
+          "description": "Aliyun OSS accessKeyId",
+          "default": ""
+        },
+        "acoss.aliyun.accessKeySecret": {
+          "type": "string",
+          "description": "Aliyun OSS accessKeySecret.",
+          "default": ""
+        },
+        "acoss.aliyun.bucket": {
+          "type": "string",
+          "description": "Aliyun OSS bucket instance.",
+          "default": ""
+        },
+        "acoss.aliyun.region": {
+          "type": "string",
+          "markdownDescription": "e.g. `oss-cn-hangzhou`, [check details](https://github.com/ali-sdk/ali-oss#data-regions).",
+          "default": "oss-cn-hangzhou"
+        },
+        "acoss.aliyun.customDomain": {
+          "type": "string",
+          "markdownDescription": "If you want to use HTTPS with `Custom Domain`, you should configure the HTTPS certificate on Aliyun OSS. [Check detail](https://help.aliyun.com/document_detail/97187.html?spm=a2c4g.11186623.2.10.43848bddZaQgmF#section-cu6-eyc-ek6).",
+          "default": ""
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.0.1",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.75.0",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "@vscode/test-electron": "^2.2.2",
+    "eslint": "^8.33.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@types/ali-oss": "^6.16.7",
+    "ali-oss": "^6.17.1",
+    "date-fns": "^2.29.3",
+    "path": "^0.12.7"
+  }
+}
