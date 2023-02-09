@@ -2,10 +2,11 @@
   "name": "appcc2oss",
   "displayName": "AppCC2OSS",
   "description": "AppCC2OSS Manager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.70.0"
   },
+  "publisher": "timooabc",
   "categories": [
     "Other"
   ],
@@ -135,7 +136,7 @@
     "@types/glob": "^8.0.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
-    "@types/vscode": "^1.75.0",
+    "@types/vscode": "^1.70.0",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "@vscode/test-electron": "^2.2.2",
