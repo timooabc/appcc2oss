@@ -4,6 +4,7 @@ import { getConfiguration, ExtensionConfig, getProgress, getFiles } from '../uti
 import { ext } from '../ExtensionVariables';
 import Logger from '../utils/Log';
 import { Task, TaskMode } from './Task';
+import { WebHook } from './WebHook';
 
 interface DeleteResponse {
   res: OSS.NormalSuccessResponse
@@ -78,10 +79,13 @@ export default class Uploader {
                 time: target.lastOperateTime,
                 desc: "",
                 files: filesList
-            })
+            });
             Task.updateTaskMap();
             ext.view.refresh();
-            setTimeout(progressResolve.bind(this), 1000);
+            setTimeout(()=>{
+                progressResolve.call(this);
+                WebHook.request(target);
+            }, 1000);
         } else {
             progress.report({message: `已上传${filesList.length - rejects.length} 个对象。`});
             setTimeout(() => {

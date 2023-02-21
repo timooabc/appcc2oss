@@ -8,7 +8,8 @@ export type ExtensionConfig = {
     accessKeySecret:string,
     customDomain:string,
     region?:string,
-    bucket?:string
+    bucket?:string,
+    webhooks?:string[],
 } & OSS.Options;
 
 /**
@@ -22,7 +23,8 @@ export function getConfiguration():ExtensionConfig{
         accessKeySecret:"",
         customDomain:"",
         region:"",
-        bucket:""
+        bucket:"",
+        webhooks:[],
     });
     return {
         accessKeyId: aliyunConfig.accessKeyId,
@@ -31,6 +33,7 @@ export function getConfiguration():ExtensionConfig{
         secure: true,
         region: aliyunConfig.region,
         bucket: aliyunConfig.bucket,
+        webhooks: aliyunConfig.webhooks
     };
 }
 

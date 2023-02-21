@@ -120,6 +120,16 @@
           "type": "string",
           "markdownDescription": "If you want to use HTTPS with `Custom Domain`, you should configure the HTTPS certificate on Aliyun OSS. [Check detail](https://help.aliyun.com/document_detail/97187.html?spm=a2c4g.11186623.2.10.43848bddZaQgmF#section-cu6-eyc-ek6).",
           "default": ""
+        },
+        "acoss.aliyun.webhooks": {
+          "title": "hooks",
+          "type": "array",
+          "description": "e.g. ['https://path/to/hook/${remoteUrl}',...]",
+          "items": {
+            "type": "string",
+            "title": "hook",
+            "description": "e.g. `https://path/to/hook/${remoteUrl}`, Call this hooks When a upload task complete. And replace ${remoteUrl} to remote url of the task."
+          }
         }
       }
     }
@@ -147,8 +157,10 @@
   },
   "dependencies": {
     "@types/ali-oss": "^6.16.7",
+    "@types/node-fetch": "^2.6.2",
     "ali-oss": "^6.17.1",
     "date-fns": "^2.29.3",
+    "node-fetch": "^2.6.9",
     "path": "^0.12.7"
   }
 }
