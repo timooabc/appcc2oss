@@ -19,7 +19,7 @@ export async function addUploadTask(uri: vscode.Uri):Promise<void>{
     box.onDidAccept(()=>{
         box.hide();
         let remote = `${config.customDomain}/${getProjectName()}` + (box.value ? `/${box.value}` : "");
-        let task:TaskMode|null = Task.add(uri.fsPath, remote);
+        let task:TaskMode|null = Task.add(uri.fsPath, remote, config.customDomain + "/");
         task && vscode.window.showInformationMessage(`${task.remote} 任务添加成功。`);
     });
     box.show();

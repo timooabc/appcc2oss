@@ -1,10 +1,11 @@
 import { ext } from '../ExtensionVariables';
-import { getFiles } from '../utils/Index';
+import { getConfiguration, getFiles } from '../utils/Index';
 import Logger from '../utils/Log';
 
 export type TaskMode = {
     path:string,
     remote:string,
+    domainRoot:string,
     lastOperateTime:number,
     createTime:number,
     versions:{
@@ -24,9 +25,14 @@ export class Task{
             return Task._map;
         }
         Task._map = new Map();
-        let data:object[] = ext.context.workspaceState.get(LIST_KEY) || [];
+        let domainRoot = getConfiguration().customDomain + "/";
+        let data:any[] = ext.context.workspaceState.get(LIST_KEY) || [];
         for (let i = 0; i < data.length; i++) {
-            const task:TaskMode = data[i] as TaskMode;
+            const item = data[i];
+            if(!item['domainRoot']){
+                item['domainRoot'] = domainRoot;
+            }
+            const task:TaskMode = item as TaskMode;
             Task._map.set(task.remote, task);
         }
         return Task._map;
@@ -45,7 +51,7 @@ export class Task{
         console.log("updateTaskMap:", ext.context.workspaceState.get(LIST_KEY));
     }
 
-    static add(path:string, remote:string):TaskMode|null{
+    static add(path:string, remote:string, domainRoot:string):TaskMode|null{
         if(Task.map.has(remote)){
             Logger.showErrorMessage("添加任务失败：已存在相同的任务");
             return null;
@@ -53,6 +59,7 @@ export class Task{
         let task:TaskMode = {
             path:path, 
             remote:remote,
+            domainRoot:domainRoot,
             createTime: Date.now(),
             lastOperateTime: 0,
             versions:[]

@@ -10,7 +10,9 @@ export class WebHook {
         let config = getConfiguration();
         if(config.webhooks && config.webhooks.length > 0 && index < config.webhooks.length){
             let hook = config.webhooks[index];
-            let _url = hook.replace(/{remoteUrl}/g, task.remote + "/");
+            let taskSubPath = task.remote.replace(task.domainRoot, "");
+            let _url = hook.replace(/{remoteUrl}/g, task.remote + "/")
+                            .replace(/{subUrl}/g, taskSubPath + "/");
             //获取返回的url对象的query属性值 
             var arg = Url.parse(_url, true).query;
             let form = new FormData();
@@ -40,7 +42,7 @@ export class WebHook {
             .then((response)=>{
                 console.log("result:", response);
                 // console.log(`完成 ${_url} 通知${JSON.stringify(response)}`);
-                Logger.showInformationMessage(`完成 ${_url} 通知， 通知结果查看console`);
+                Logger.showInformationMessage(`通知Hooks:${index + 1}... done`);
                 WebHook.request(task, ++index, response.cookie);
             });
         }

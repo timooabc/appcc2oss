@@ -2,7 +2,7 @@
   "name": "appcc2oss",
   "displayName": "AppCC2OSS",
   "description": "AppCC2OSS Manager",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.70.0"
   },
@@ -124,11 +124,10 @@
         "acoss.aliyun.webhooks": {
           "title": "hooks",
           "type": "array",
-          "description": "e.g. ['https://path/to/hook/${remoteUrl}',...]",
+          "description": "One or more Hook like: https://path/to/hook/{remoteUrl}. Call hooks When a upload task complete. And replace {remoteUrl} to remote url of the task, replace {subUrl} to task sub remote url of the customDomain",
           "items": {
             "type": "string",
-            "title": "hook",
-            "description": "e.g. `https://path/to/hook/${remoteUrl}`, Call this hooks When a upload task complete. And replace ${remoteUrl} to remote url of the task."
+            "title": "hook"
           }
         }
       }

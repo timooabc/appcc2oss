@@ -47,11 +47,9 @@ export default class Uploader {
         let filesList:string[] = getFiles(target.path);
         const { progress, progressResolve } = getProgress(`上传 ${filesList.length} 对象`);
         let finished:number = 0;
-        let config = getConfiguration();
         const puts = filesList.map((value:string)=>{
-            let filePath = target.remote.replace(config.customDomain + "/", "");
+            let filePath = target.remote.replace(target.domainRoot, "");
             filePath += value.replace(target.path, "").replace(/\\/g, "/");
-            console.log("file", filePath);
             const u = this.put(filePath, value);
             u.then((putObjectResult) => {
                 progress.report({

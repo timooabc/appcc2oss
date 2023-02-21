@@ -24,4 +24,14 @@
 ## 0.0.2
 完成基本功能
 
+## 0.0.3
+支持任务上传完成后调用webhooks
+
+## 0.0.4
+webhooks支持关键字的替换：
+- 替换```{remoteUrl}``` 为任务的Url
+- 替换```{subUrl}``` 为任务相对customDomain的子路径
+
+修复任务创建后修改customDomain配置项的bug。
+
 **Enjoy!**

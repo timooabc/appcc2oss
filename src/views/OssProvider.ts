@@ -50,7 +50,6 @@ export class TaskItem extends vscode.TreeItem {
 	}
     
     static getLabel(mode:TaskMode):string{
-        let domainRoot = getConfiguration().customDomain + "/";
-        return `【${mode.remote.replace(domainRoot, "")}】${path.basename(mode.path)}`;
+        return `【${mode.remote.replace(mode.domainRoot, "")}】${path.basename(mode.path)}`;
     }
 }
