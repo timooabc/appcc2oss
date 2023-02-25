@@ -76,7 +76,7 @@ export default class Uploader {
             target.versions.push({
                 time: target.lastOperateTime,
                 desc: "",
-                files: filesList
+                files: []
             });
             Task.updateTaskMap();
             ext.view.refresh();

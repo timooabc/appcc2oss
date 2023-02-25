@@ -28,7 +28,7 @@ export class OssProvider implements vscode.TreeDataProvider<TaskMode>{
     }
 
     resolveTreeItem?(item: vscode.TreeItem, element: TaskMode, token: vscode.CancellationToken): vscode.ProviderResult<vscode.TreeItem> {
-        throw new Error("Method not implemented.");
+        return item;
     }
 
     refresh(){
@@ -40,14 +40,17 @@ export class OssProvider implements vscode.TreeDataProvider<TaskMode>{
 export class TaskItem extends vscode.TreeItem {
 	iconPath = new vscode.ThemeIcon("cloud");
     contextValue = "task";
-
-    constructor(public readonly mode:TaskMode) {
-		super(TaskItem.getLabel(mode));
+    public readonly mode:TaskMode;
+    constructor(mode:TaskMode) {
+        super(TaskItem.getLabel(mode));
+        this.mode = mode;
+        this.id = mode.remote;
+        this.tooltip = mode.remote;
 		this.description = 
-        this.mode.lastOperateTime ? 
-        `uploaded ${new Date(this.mode.lastOperateTime).toLocaleString()}` : 
-        `created ${new Date(this.mode.createTime).toLocaleString()}`;
-	}
+        mode.lastOperateTime ? 
+        `uploaded ${new Date(mode.lastOperateTime).toLocaleString()}` : 
+        `created ${new Date(mode.createTime).toLocaleString()}`;
+    }
     
     static getLabel(mode:TaskMode):string{
         return `【${mode.remote.replace(mode.domainRoot, "")}】${path.basename(mode.path)}`;

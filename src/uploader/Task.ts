@@ -1,6 +1,9 @@
 import { ext } from '../ExtensionVariables';
+import * as vscode from 'vscode';
 import { getConfiguration, getFiles } from '../utils/Index';
 import Logger from '../utils/Log';
+import * as path from 'path';
+import * as fs from 'fs';
 
 export type TaskMode = {
     path:string,
@@ -25,8 +28,13 @@ export class Task{
             return Task._map;
         }
         Task._map = new Map();
+        if(!vscode.workspace.workspaceFolders){
+            return Task._map;
+        }
         let domainRoot = getConfiguration().customDomain + "/";
-        let data:any[] = ext.context.workspaceState.get(LIST_KEY) || [];
+        const filePath = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, '.vscode', '.appcc2oss');
+        let fileContent = fs.readFileSync(filePath, 'utf-8');
+        let data:any[] = fileContent ? JSON.parse(fileContent) : (ext.context.workspaceState.get(LIST_KEY) || []);
         for (let i = 0; i < data.length; i++) {
             const item = data[i];
             if(!item['domainRoot']){
@@ -47,7 +55,12 @@ export class Task{
     }
 
     static updateTaskMap():void{
-        ext.context.workspaceState.update(LIST_KEY, Task.list);
+        if(!vscode.workspace.workspaceFolders){
+            return;
+        }
+        const filePath = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, '.vscode', '.appcc2oss');
+        fs.writeFileSync(filePath, JSON.stringify(Task.list, null, 4), 'utf-8');
+        // ext.context.workspaceState.update(LIST_KEY, Task.list);
         console.log("updateTaskMap:", ext.context.workspaceState.get(LIST_KEY));
     }
 
