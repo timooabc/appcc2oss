@@ -2,10 +2,25 @@
   "name": "appcc2oss",
   "displayName": "AppCC2OSS",
   "description": "AppCC2OSS Manager",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "engines": {
     "vscode": "^1.70.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timooabc/appcc2oss.git"
+  },
+  "keywords": [
+    "aliyun",
+    "oss",
+    "image",
+    "picture",
+    "upload",
+    "aliyun oss",
+    "alibaba cloud",
+    "image uploader",
+    "upload image"
+  ],
   "publisher": "timooabc",
   "categories": [
     "Other"
