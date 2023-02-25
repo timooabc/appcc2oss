@@ -73,11 +73,11 @@ export default class Uploader {
         if (!rejects.length) {
             progress.report({message: '上传完成。'});
             target.lastOperateTime = Date.now();
-            target.versions.push({
-                time: target.lastOperateTime,
-                desc: "",
-                files: []
-            });
+            // target.versions.push({
+            //     time: target.lastOperateTime,
+            //     desc: "",
+            //     files: []
+            // });
             Task.updateTaskMap();
             ext.view.refresh();
             setTimeout(()=>{
