@@ -32,7 +32,7 @@ export class Task{
             return Task._map;
         }
         let domainRoot = getConfiguration().customDomain + "/";
-        const filePath = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, '.vscode', '.appcc2oss');
+        const filePath = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, '.appcc2oss');
         let fileContent = fs.readFileSync(filePath, 'utf-8');
         let data:any[] = fileContent ? JSON.parse(fileContent) : (ext.context.workspaceState.get(LIST_KEY) || []);
         for (let i = 0; i < data.length; i++) {
@@ -58,7 +58,7 @@ export class Task{
         if(!vscode.workspace.workspaceFolders){
             return;
         }
-        const filePath = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, '.vscode', '.appcc2oss');
+        const filePath = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, '.appcc2oss');
         fs.writeFileSync(filePath, JSON.stringify(Task.list, null, 4), 'utf-8');
         // ext.context.workspaceState.update(LIST_KEY, Task.list);
         console.log("updateTaskMap:", ext.context.workspaceState.get(LIST_KEY));
