@@ -1,7 +1,7 @@
 {
   "name": "appcc2oss",
-  "displayName": "AppCC2OSS",
-  "description": "AppCC2OSS Manager",
+  "displayName": "OSSTask",
+  "description": "OSS上传任务管理插件",
   "version": "0.0.6",
   "engines": {
     "vscode": "^1.70.0"
