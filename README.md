@@ -1,4 +1,4 @@
-# OSS Upload Task 
+# OSS Task 
 
 一个oss上传任务插件，管理任务并执行上传任务的插件。
 
