@@ -25,22 +25,4 @@
 ### 拷贝连接
 右击'OSS UPLOAD TASK'界面中的任意任务，选择'Copy Link'。
 
-## Release Notes
-### v0.0.5
-修改task数据的存储位置到当前工作空间，方便数据的版本控制和多人协作。
-
-### v0.0.4
-webhooks支持关键字的替换：
-- 替换```{remoteUrl}``` 为任务的Url
-- 替换```{subUrl}``` 为任务相对customDomain的子路径
-
-修复任务创建后修改customDomain配置项的bug。
-
-### v0.0.3
-支持任务上传完成后调用webhooks
-
-### v0.0.2
-完成基本功能
-
-
 **Enjoy!**
