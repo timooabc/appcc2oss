@@ -2,7 +2,7 @@ import { ext } from '../ExtensionVariables';
 import * as vscode from 'vscode';
 import { getConfiguration, getFiles } from '../utils/Index';
 import Logger from '../utils/Log';
-import * as path from 'path';
+import * as Path from 'path';
 import * as fs from 'fs';
 
 export type TaskMode = {
@@ -32,12 +32,16 @@ export class Task{
             return Task._map;
         }
         let domainRoot = getConfiguration().customDomain + "/";
-        const filePath = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, '.osstasks');
+        let workspaceRoot = vscode.workspace.workspaceFolders![0].uri.fsPath;
+        const filePath = Path.join(workspaceRoot, '.osstasks');
         let data:any[] = fs.existsSync(filePath) ? JSON.parse(fs.readFileSync(filePath, 'utf-8')) : (ext.context.workspaceState.get(LIST_KEY) || []);
         for (let i = 0; i < data.length; i++) {
             const item = data[i];
             if(!item['domainRoot']){
                 item['domainRoot'] = domainRoot;
+            }
+            if(item.path.includes(":")){
+                item.path = Path.relative(workspaceRoot, item.path);
             }
             const task:TaskMode = item as TaskMode;
             Task._map.set(task.remote, task);
@@ -57,19 +61,23 @@ export class Task{
         if(!vscode.workspace.workspaceFolders){
             return;
         }
-        const filePath = path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, '.osstasks');
+        const filePath = Path.join(vscode.workspace.workspaceFolders![0].uri.fsPath, '.osstasks');
         fs.writeFileSync(filePath, JSON.stringify(Task.list, null, 4), 'utf-8');
         // ext.context.workspaceState.update(LIST_KEY, Task.list);
         console.log("updateTaskMap:", ext.context.workspaceState.get(LIST_KEY));
     }
 
     static add(path:string, remote:string, domainRoot:string):TaskMode|null{
+        if(!vscode.workspace.workspaceFolders){
+            return null;
+        }
         if(Task.map.has(remote)){
             Logger.showErrorMessage("添加任务失败：已存在相同的任务");
             return null;
         }
+        let workspaceRoot = vscode.workspace.workspaceFolders![0].uri.fsPath;
         let task:TaskMode = {
-            path:path, 
+            path:Path.relative(workspaceRoot, path),
             remote:remote,
             domainRoot:domainRoot,
             createTime: Date.now(),

@@ -5,6 +5,7 @@ import { ext } from '../ExtensionVariables';
 import Logger from '../utils/Log';
 import { Task, TaskMode } from './Task';
 import { WebHook } from './WebHook';
+import * as Path from 'path';
 
 interface DeleteResponse {
   res: OSS.NormalSuccessResponse
@@ -44,7 +45,11 @@ export default class Uploader {
     }
 
     async putDir(target:TaskMode){
-        let filesList:string[] = getFiles(target.path);
+        if(!vscode.workspace.workspaceFolders){
+            return null;
+        }
+        let workspaceRoot = vscode.workspace.workspaceFolders![0].uri.fsPath;
+        let filesList:string[] = getFiles(Path.join(workspaceRoot, target.path));
         const { progress, progressResolve } = getProgress(`上传 ${filesList.length} 对象`);
         let finished:number = 0;
         const puts = filesList.map((value:string)=>{

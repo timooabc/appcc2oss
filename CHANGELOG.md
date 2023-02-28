@@ -4,7 +4,11 @@ All notable changes to the "appcc2oss" extension will be documented in this file
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [0.0.5]
+## [0.0.8]
+### Fixed
+修改Task文件中的绝对路径为相对路径
+
+## [0.0.7]
 ### Added
 修改task数据的存储位置到当前工作空间，方便数据的版本控制和多人协作。
 
