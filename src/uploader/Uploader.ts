@@ -54,7 +54,7 @@ export default class Uploader {
         let finished:number = 0;
         const puts = filesList.map((value:string)=>{
             let filePath = target.remote.replace(target.domainRoot, "");
-            filePath += value.replace(target.path, "").replace(/\\/g, "/");
+            filePath += value.replace(Path.join(workspaceRoot, target.path), "").replace(/\\/g, "/");
             const u = this.put(filePath, value);
             u.then((putObjectResult) => {
                 progress.report({

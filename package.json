@@ -2,7 +2,7 @@
   "name": "appcc2oss",
   "displayName": "OSS Task",
   "description": "OSS上传任务插件",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "engines": {
     "vscode": "^1.70.0"
   },

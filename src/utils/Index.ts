@@ -83,19 +83,14 @@ export function getFiles(root:string):string[]{
     return result;
 }
 
-let projectName:string;
 export function getProjectName():string{
-    if(projectName !== undefined){
-        return projectName;
-    }
     if(vscode.workspace.workspaceFolders){
         let projectPath = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, "project.json");
         if(fs.existsSync(projectPath)){
             let content = fs.readFileSync(projectPath, {encoding:"utf-8"});
             let contentObj = JSON.parse(content);
-            return projectName = contentObj.name || "";
+            return contentObj.name || "";
         }
     }
-    projectName = "";
-    return projectName;
+    return "";
 }
