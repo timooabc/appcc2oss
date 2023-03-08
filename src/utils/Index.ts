@@ -83,14 +83,20 @@ export function getFiles(root:string):string[]{
     return result;
 }
 
+/**
+ * 获取项目名称，优先取工作空间中project.json中的name字段，不存在则取工作空间的文件夹名称。
+ * @returns 
+ */
 export function getProjectName():string{
     if(vscode.workspace.workspaceFolders){
-        let projectPath = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, "project.json");
+        let workspaceRoot = vscode.workspace.workspaceFolders[0].uri.fsPath;
+        let projectPath = path.join(workspaceRoot, "project.json");
         if(fs.existsSync(projectPath)){
             let content = fs.readFileSync(projectPath, {encoding:"utf-8"});
             let contentObj = JSON.parse(content);
-            return contentObj.name || "";
+            return contentObj.name || path.basename(workspaceRoot);
         }
+        return path.basename(workspaceRoot);
     }
     return "";
 }
